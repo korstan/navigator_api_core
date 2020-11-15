@@ -1,10 +1,12 @@
 const Koa = require('koa');
 const logger = require('koa-logger')
 const Router = require('@koa/router');
+const cors = require('@koa/cors');
 const ApplicationRouter = require ('./src/api/router.js');
 const config = require('./src/config');
 
 const app = new Koa();
+app.use(cors());
 const rootRouter = new Router();
 
 rootRouter.get('/', async (ctx) => {

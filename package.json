@@ -10,6 +10,7 @@
   "author": "korstan",
   "license": "ISC",
   "dependencies": {
+    "@koa/cors": "^3.1.0",
     "@koa/router": "^10.0.0",
     "dotenv": "^8.2.0",
     "knex": "^0.21.12",
