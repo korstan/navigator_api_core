@@ -2,6 +2,12 @@ const _ = require('lodash');
 const knex = require('../connection');
 
 module.exports = {
+  findById(id) {
+    return knex('locations')
+      .where({id})
+      .select();
+  },
+
   getAllByBuildingId(buildingId) {
     return knex('locations')
       .join('points', 'locations.id', 'points.locationId')
@@ -17,6 +23,7 @@ module.exports = {
           locations: value.map((location) => ({
             id: location.id,
             title: location.title,
+            pathPointId: location.pathPointId,
             points: { x1: location.x1, y1: location.y1 },
             entryPoints: { x: location.x_entry, y: location.y_entry }
           })),
