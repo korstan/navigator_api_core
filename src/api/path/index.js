@@ -9,6 +9,9 @@ const Query = {
   PathPoints: require('../../db/queries/pathPoints'),
 }
 
+const generateTextByPoints = require('../../utils').generateTextByPoints;
+
+
 const CheckoutNeighbor = function(pathHistory, pointToHandle, destinationPointId, allPoints) {
   let newPathHistory = {...pathHistory, [pointToHandle.id]: pointToHandle};
   if(pointToHandle.id == destinationPointId) return newPathHistory;
