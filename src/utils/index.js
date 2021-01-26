@@ -32,36 +32,36 @@ module.exports = {
             textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
         }
         return textParts.join('. ');
-    }
-}
+    },
 
-function calculateRotationDirection(points){
-    const left = 'налево';
-    const right = 'направо';
-    let result;
-    let i=0;
-    if ((points[i].x - points[i+1].x) === 0) {
-        const dy = points[i+1].y - points[i].y;
-        const dx = points[i+2].x - points[i+1].x;
-        if ((dy > 0 && dx > 0) || (dy < 0 && dx < 0)) {
-            result = left;
+    calculateRotationDirection(points){
+        const left = 'налево';
+        const right = 'направо';
+        let result;
+        let i=0;
+        if ((points[i].x - points[i+1].x) === 0) {
+            const dy = points[i+1].y - points[i].y;
+            const dx = points[i+2].x - points[i+1].x;
+            if ((dy > 0 && dx > 0) || (dy < 0 && dx < 0)) {
+                result = left;
+            } else {
+                result = right
+            }
         } else {
-            result = right
+            const dx = points[i+1].x - points[i].x;
+            const dy = points[i+2].y - points[i+1].y;
+            if ((dy > 0 && dx > 0) || (dy < 0 && dx < 0)) {
+                result = right;
+            } else {
+                result = left
+            }
         }
-    } else {
-        const dx = points[i+1].x - points[i].x;
-        const dy = points[i+2].y - points[i+1].y;
-        if ((dy > 0 && dx > 0) || (dy < 0 && dx < 0)) {
-            result = right;
-        } else {
-            result = left
-        }
-    }
-    return result;
-}
+        return result;
+    },
 
-// Склонение числительных
-// Пример: declOfNum(sum, ['роль', 'роли', 'ролей'])
-export const declOfNum = (n, titles) => {
-    return titles[(n % 10 === 1 && n % 100 !== 11) ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2]
+    // Склонение числительных
+    // Пример: declOfNum(sum, ['роль', 'роли', 'ролей'])
+    declOfNum(n, titles) {
+        return titles[(n % 10 === 1 && n % 100 !== 11) ? 0 : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? 1 : 2]
+    }
 }
