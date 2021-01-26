@@ -17,7 +17,9 @@ module.exports = {
             id: point.id,
             title: point.title,
             x: point.x,
-            y: point.y
+            y: point.y,
+            textToSpeech: point.textToSpeech,
+            isStairs: point.isStairs,
           })),
         }));
       });
