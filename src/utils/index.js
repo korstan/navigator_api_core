@@ -8,10 +8,10 @@ module.exports = {
                         textParts.push(`пройдите прямо до аудитории ${points[i + 1].title}`)
                     } else {
                         const count = Math.abs(points[i].y - points[i + 1].y)
-                        textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
+                        textParts.push(`пройдите прямо ${count} ${this.declOfNum(count, ['метр', 'метра', 'метров'])}`)
                     }
                     if ((points[i + 1].y - points[i + 2].y) === 0) {
-                        const direction = calculateRotationDirection([points[i], points[i + 1], points[i + 2],]);
+                        const direction = this.calculateRotationDirection([points[i], points[i + 1], points[i + 2],]);
                         textParts.push(`поверните ${direction}`)
                     }
                 } else if ((points[i].y - points[i + 1].y) === 0) {
@@ -19,17 +19,17 @@ module.exports = {
                         textParts.push(`пройдите прямо до аудитории ${points[i + 1].title}`)
                     } else {
                         const count = Math.abs(points[i].x - points[i + 1].x)
-                        textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
+                        textParts.push(`пройдите прямо ${count} ${this.declOfNum(count, ['метр', 'метра', 'метров'])}`)
                     }
                     if ((points[i + 1].x - points[i + 2].x) === 0) {
-                        const direction = calculateRotationDirection([points[i], points[i + 1], points[i + 2],]);
+                        const direction = this.calculateRotationDirection([points[i], points[i + 1], points[i + 2],]);
                         textParts.push(`поверните ${direction}`)
                     }
                 }
             }
         } else {
             const count = Math.abs(points[0].y - points[1].y) + Math.abs(points[0].y - points[1].y)
-            textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
+            textParts.push(`пройдите прямо ${count} ${this.declOfNum(count, ['метр', 'метра', 'метров'])}`)
         }
         return textParts.join('. ');
     },
