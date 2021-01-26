@@ -13,9 +13,9 @@ const generateTextByPoints = require('../../utils').generateTextByPoints;
 
 
 const CheckoutNeighbor = function(pathHistory, pointToHandle, destinationPointId, allPoints) {
-  let newPathHistory = {...pathHistory, [pointToHandle.id]: pointToHandle};
+  let newPathHistory = [...pathHistory, pointToHandle];
   if(pointToHandle.id == destinationPointId) return newPathHistory;
-  let unvisitedNeighbors = pointToHandle.links.filter(n => !pathHistory[n]);
+  let unvisitedNeighbors = pointToHandle.links.filter(n => !pathHistory.find(p => p.id == n)); 
   if(!unvisitedNeighbors.length) return false;
   for(let neighbor of unvisitedNeighbors) {
     console.log('unvisitedNeighbors', unvisitedNeighbors);
@@ -44,6 +44,11 @@ router.get('/', async (ctx, next) => {
 
     let allPoints = await Query.PathPoints.getAllByBuildingIdAndLevel(fromLocation.buildingId, fromLocation.level);
     
+    if(fromLocation.level != toLocation.level) {
+      let toLevelAllPoints = await Query.PathPoints.getAllByBuildingIdAndLevel(toLocation.buildingId, toLocation.level);
+      allPoints = [...allPoints, ...toLevelAllPoints];
+    }
+
     allPoints = await Promise.all(
       allPoints.map(async point => {
         let links = [
@@ -59,10 +64,19 @@ router.get('/', async (ctx, next) => {
     const entryPoint = allPoints[fromLocation.pathPointId];
     
     // console.log(entryPoint);
-    const result = CheckoutNeighbor({}, entryPoint, toLocation.pathPointId, allPoints);
-    if(result) {
+    let resultingPoints = CheckoutNeighbor([], entryPoint, toLocation.pathPointId, allPoints);
+    if(resultingPoints) {
+      let result = _.chain(resultingPoints)
+        .groupBy('level')
+        .map((points, level) => ({
+          level, 
+          path: points.map(p=>({x: p.x, y: p.y})),
+          textToSpeech: generateTextByPoints(points)
+        }));
+      // console.log(result);
+      
+      ctx.body = result;
       ctx.status = 200;
-      ctx.body = Object.values(result).map(p=>({x: p.x, y: p.y }));
     } else {
       ctx.throw(404, 'Не удалось построить маршрут');
     }
