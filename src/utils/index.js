@@ -36,7 +36,7 @@ module.exports = {
             for (let i = 0; i < points.length - 2; i++) {
                 if ((points[i].x - points[i + 1].x) === 0) {
                     if (points[i + 1].textToSpeech && points[i + 1].textToSpeech.length > 1) {
-                        textParts.push(`пройдите прямо до аудитории ${points[i + 1].textToSpeech}`)
+                        textParts.push(`пройдите прямо до ${points[i + 1].textToSpeech}`)
                     } else {
                         const count = Math.abs(points[i].y - points[i + 1].y)
                         textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
@@ -47,7 +47,7 @@ module.exports = {
                     }
                 } else if ((points[i].y - points[i + 1].y) === 0) {
                     if (points[i + 1].textToSpeech && points[i + 1].textToSpeech.length > 1) {
-                        textParts.push(`пройдите прямо до аудитории ${points[i + 1].textToSpeech}`)
+                        textParts.push(`пройдите прямо до ${points[i + 1].textToSpeech}`)
                     } else {
                         const count = Math.abs(points[i].x - points[i + 1].x)
                         textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
