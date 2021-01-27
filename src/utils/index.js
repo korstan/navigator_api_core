@@ -33,7 +33,7 @@ module.exports = {
     generateTextByPoints(points) {
         const textParts = []
         if (points.length > 2) {
-            for (let i = 0; i < points.length - 2; i++) {
+            for (let i = 0; i < points.length - 1; i++) {
                 if ((points[i].x - points[i + 1].x) === 0) {
                     if (points[i + 1].textToSpeech && points[i + 1].textToSpeech.length > 1) {
                         textParts.push(`пройдите прямо до ${points[i + 1].textToSpeech}`)
@@ -41,7 +41,7 @@ module.exports = {
                         const count = Math.abs(points[i].y - points[i + 1].y)
                         textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
                     }
-                    if ((points[i + 1].y - points[i + 2].y) === 0) {
+                    if (((i + 2) < (points.length)) && ((points[i + 1].y - points[i + 2].y) === 0)) {
                         const direction = calculateRotationDirection([points[i], points[i + 1], points[i + 2],]);
                         textParts.push(`поверните ${direction}`)
                     }
@@ -52,7 +52,7 @@ module.exports = {
                         const count = Math.abs(points[i].x - points[i + 1].x)
                         textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
                     }
-                    if ((points[i + 1].x - points[i + 2].x) === 0) {
+                    if (((i + 2) < (points.length)) && ((points[i + 1].x - points[i + 2].x) === 0)) {
                         const direction = calculateRotationDirection([points[i], points[i + 1], points[i + 2],]);
                         textParts.push(`поверните ${direction}`)
                     }
