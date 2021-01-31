@@ -23,6 +23,27 @@ const calculateRotationDirection = (points) => {
     return result;
 }
 
+const calculateRotationDirectionNew = (points) => {
+    const left = 'налево';
+    const right = 'направо';
+    let result;
+    let i=0;
+    
+    let p0 = points[i];
+    let p1 = points[i+1];
+    let p2 = points[i+2];
+    
+    let v1x = p1.x - p0.x;
+    let v1y = p1.y - p0.y;
+    let v2x = p2.x - p1.x;
+    let v2y = p2.y - p1.y;
+    if (v1x * v2y - v1y * v2x > 0)
+        result = left;
+    else
+        result = right;
+    return result;
+}
+
 // Склонение числительных
     // Пример: declOfNum(sum, ['роль', 'роли', 'ролей'])
 const declOfNum = (n, titles) => {
@@ -42,7 +63,7 @@ module.exports = {
                         textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
                     }
                     if (((i + 2) < (points.length)) && ((points[i + 1].y - points[i + 2].y) === 0)) {
-                        const direction = calculateRotationDirection([points[i], points[i + 1], points[i + 2],]);
+                        const direction = calculateRotationDirectionNew([points[i], points[i + 1], points[i + 2],]);
                         textParts.push(`поверните ${direction}`)
                     }
                 } else if ((points[i].y - points[i + 1].y) === 0) {
@@ -53,7 +74,7 @@ module.exports = {
                         textParts.push(`пройдите прямо ${count} ${declOfNum(count, ['метр', 'метра', 'метров'])}`)
                     }
                     if (((i + 2) < (points.length)) && ((points[i + 1].x - points[i + 2].x) === 0)) {
-                        const direction = calculateRotationDirection([points[i], points[i + 1], points[i + 2],]);
+                        const direction = calculateRotationDirectionNew([points[i], points[i + 1], points[i + 2],]);
                         textParts.push(`поверните ${direction}`)
                     }
                 }
