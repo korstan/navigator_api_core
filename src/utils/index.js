@@ -38,9 +38,9 @@ const calculateRotationDirectionNew = (points) => {
     let v2x = p2.x - p1.x;
     let v2y = p2.y - p1.y;
     if (v1x * v2y - v1y * v2x > 0)
-        result = left;
-    else
         result = right;
+    else
+        result = left;
     return result;
 }
 
