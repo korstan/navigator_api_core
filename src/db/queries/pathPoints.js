@@ -11,17 +11,21 @@ module.exports = {
         let entries = Object.entries(
           _.groupBy(points, (point) => point.level),
         );
-        return entries.map(([key, value]) => ({
+        return Promise.all(entries.map(async([key, value]) => ({
           level: key,
-          points: value.map((point) => ({
+          points: await Promise.all(value.map(async(point) => ({
             id: point.id,
             title: point.title,
             x: point.x,
             y: point.y,
             textToSpeech: point.textToSpeech,
             isStairs: point.isStairs,
-          })),
-        }));
+            links: [
+              ...(await this.getPointLinksFrom(point.id)).map(a=>a.toPointId),
+              ...(await this.getPointLinksTo(point.id)).map(a=>a.fromPointId)
+            ]
+          }))),
+        })));
       });
   },
 
